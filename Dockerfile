@@ -2,18 +2,18 @@
 #
 # docker build -t sequenceiq/hadoop .
 
-FROM sequenceiq/pam:centos-6.5
-MAINTAINER SequenceIQ
+FROM swenchancn/alpine:3.4
+MAINTAINER swenchan
 
 USER root
 
 # install dev tools
-RUN yum clean all; \
-    rpm --rebuilddb; \
-    yum install -y curl which tar sudo openssh-server openssh-clients rsync
-# update libselinux. see https://github.com/sequenceiq/hadoop-docker/issues/14
-RUN yum update -y libselinux
-
+# RUN yum clean all; \
+#     rpm --rebuilddb; \
+#     yum install -y curl which tar sudo openssh-server openssh-clients rsync
+RUN apk add --no-cache libstdc++ curl which tar sudo openssh-server openssh-clients rsync 
+# # update libselinux. see https://github.com/sequenceiq/hadoop-docker/issues/14
+# RUN yum update -y libselinux
 # passwordless ssh
 RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key
 RUN ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key
